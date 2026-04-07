@@ -1,7 +1,7 @@
 resource "aws_vpc" "mandu" {
     cidr_block = "10.0.0.0/16"
     tags = {
-      Name = "mandu_vpc"
+      Name = "mandu_vpc-1"
     }
   
 }
