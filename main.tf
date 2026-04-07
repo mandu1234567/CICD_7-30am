@@ -1,17 +1,12 @@
-resource "aws_vpc" "mandu" {
-    cidr_block = "10.0.0.0/16"
-    tags = {
-      Name = "mandu_vpc-1"
-    }
-  
+provider "aws" {
+  region = "us-east-1"
 }
 
+resource "aws_instance" "example" {
+  ami           = "ami-0c02fb55956c7d316" # Amazon Linux
+  instance_type = "t2.micro"
 
-resource "aws_subnet" "mandu_subnet" {
-    vpc_id = aws_vpc.mandu.id
-    cidr_block = "10.0.0.0/24"
-    tags = {
-      Name = "mandusubnet"
-    }
-  
+  tags = {
+    Name = "MyInstance"
+  }
 }
