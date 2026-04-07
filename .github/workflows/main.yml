@@ -1,88 +1,88 @@
-# name: Terraform Deploy
+name: Terraform Deploy
 
-# on:
-#   workflow_dispatch:
-
-# jobs:
-#   terraform-plan:
-#     name: Terraform Plan
-#     runs-on: self-hosted
-
-#     steps:
-#       - name: Checkout Code
-#         uses: actions/checkout@v4
-
-#       - name: Setup Terraform
-#         uses: hashicorp/setup-terraform@v3
-
-#       - name: Configure AWS Credentials
-#         uses: aws-actions/configure-aws-credentials@v4
-#         with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           aws-region: us-east-1   
-
-#       - name: Terraform Init
-#         run: terraform init
-
-#       - name: Terraform Validate
-#         run: terraform validate
-
-#       - name: Terraform Plan
-#         run: terraform plan -out=tfplan
-
-#       - name: Upload Plan Artifact
-#         uses: actions/upload-artifact@v4
-#         with:
-#           name: tfplan
-#           path: tfplan
-
-#   terraform-apply:
-#     name: Terraform Apply
-#     needs: terraform-plan
-#     runs-on: self-hosted
-
-#     # 🔐 Manual approval required here
-#     environment:
-#       name: production
-
-#     steps:
-#       - name: Checkout Code
-#         uses: actions/checkout@v4
-
-#       - name: Setup Terraform
-#         uses: hashicorp/setup-terraform@v3
-
-#       - name: Configure AWS Credentials
-#         uses: aws-actions/configure-aws-credentials@v4
-#         with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           aws-region: us-east-1
-
-#       - name: Download Plan Artifact
-#         uses: actions/download-artifact@v4
-#         with:
-#           name: tfplan
-
-#       - name: Terraform Init
-#         run: terraform init
-
-#       - name: Terraform Apply
-#         run: terraform apply  tfplan
-
-
-name: Test Runner
-
-on: [push]
+on:
+  workflow_dispatch:
 
 jobs:
-  test:
+  terraform-plan:
+    name: Terraform Plan
     runs-on: self-hosted
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - name: Run command
-        run: echo "Runner is working 🚀"
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1   
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      - name: Upload Plan Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: tfplan
+
+  terraform-apply:
+    name: Terraform Apply
+    needs: terraform-plan
+    runs-on: self-hosted
+
+    # 🔐 Manual approval required here
+    environment:
+      name: production
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Download Plan Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        run: terraform apply  tfplan
+
+
+# name: Test Runner
+
+# on: [push]
+
+# jobs:
+#   test:
+#     runs-on: self-hosted
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+
+#       - name: Run command
+#         run: echo "Runner is working 🚀"
