@@ -6,7 +6,7 @@ on:
 jobs:
   terraform-plan:
     name: Terraform Plan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout Code
@@ -40,7 +40,7 @@ jobs:
   terraform-apply:
     name: Terraform Apply
     needs: terraform-plan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     # 🔐 Manual approval required here
     environment:
